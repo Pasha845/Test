@@ -22,6 +22,14 @@
       background-repeat: no-repeat;
     }
 
+    .none {
+      display: none;
+    }
+
+    .block {
+      display: block;
+    }
+
     .inscription {
       position: absolute;
       right: 0;
@@ -30,51 +38,67 @@
     .wheel {
       position: absolute;
       bottom: 0;
-      animation: rotate 2s infinite;
       transform-origin: center;
     }
 
-    @keyframes rotate {
+    .spin {
+      animation: spin 2s infinite;
+      transform-origin: center;
+    }
+
+    @keyframes spin {
       0% {
-        transform: rotate(0deg);
-      }
-      25% {
         transform: rotate(-10deg);
       }
       50% {
         transform: rotate(10deg);
       }
-      75% {
+      100% {
         transform: rotate(-10deg);
       }
-      100% {
+    }
+
+    .rotating {
+      animation: rotate 3s linear forwards;
+    }
+
+    @keyframes rotate {
+      from {
         transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
       }
     }
 
     .center {
       position: absolute;
-      left: 70px;
+      left: 50%;
       bottom: 65px;
+      transform: translateX(-50%);
     }
 
     .total {
       position: absolute;
       top: 90px;
-      left: 160px;
+      left: 50%;
       font-size: 20px;
       font-weight: bold;
       color: #fff;
+      transform: translateX(-50%);
     }
 
     .btn {
       position: absolute;
-      left: 145px;
-      bottom: 230px;
+      left: 70px;
+      bottom: 165px;
       border: none;
       padding: 0;
       background: none;
       cursor: pointer;
+    }
+
+    .pulse {
       transition: transform 0.2s;
       animation: pulse 1.5s infinite;
     }
@@ -90,23 +114,90 @@
         transform: scale(1);
       }
     }
+
+    .not-allow {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .repeat {
+      position: absolute;
+      left: 80px;
+      bottom: 80px;
+    }
+
+    .splendida {
+      position: absolute;
+      left: 100px;
+      bottom: 110px;
+    }
+
+    .bonus {
+      position: absolute;
+      left: 70px;
+      bottom: 155px;
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .bonus img {
+      animation: grow 0.5s forwards, drop 0.5s forwards 0.5s;
+    }
+
+    @keyframes grow {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes drop {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(60px);
+      }
+    }
+
+    .plus {
+      transform: scale(1.8);
+    }
+
+    .static {
+      position: absolute;
+      left: 80px;
+      bottom: 80px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="main">
       <img class="inscription" src="img/inscription.gif" width="300">
-      <div class="wheel">
+      <div class="wheel spin" id="rotate">
         <img src="img/wheel.png" width="480">
       </div>
       <div class="center">
         <img src="img/wheel center.png" width="330">
-        <p class="total">2</p>
+        <p class="total" id="totalElement">2</p>
+        <button class="btn pulse" id="rotateButton">
+          <img src="img/button.png" width="200">
+        </button>
+        <img class="static none" id="static" src="img/static.gif" width="180">
+        <button class="bonus none" id="bonus" onclick='window.location.replace("{offer_link}");'>
+          <img id="img" src="img/utilizzare il bonus.png" width="200">
+        </button>
+        <img class="repeat none" id="repeat" src="img/REPEAT.png" width="180">
+        <img class="splendida none" id="splendida" src="img/splendida!.png" width="150">
       </div>
-      <button class="btn">
-        <img src="img/button.png" width="200">
-      </button>
     </div>
+    <script src="js/script.js"></script>
   </div>
 </body>
 </html>
