@@ -9,6 +9,13 @@
       background-color: black;
     }
 
+    button {
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+    }
+
     .container {
       display: flex;
       justify-content: center;
@@ -38,11 +45,6 @@
     .wheel {
       position: absolute;
       bottom: 0;
-      transform-origin: center;
-    }
-
-    .spin {
-      animation: spin 2s infinite;
       transform-origin: center;
     }
 
@@ -92,10 +94,6 @@
       position: absolute;
       left: 70px;
       bottom: 165px;
-      border: none;
-      padding: 0;
-      background: none;
-      cursor: pointer;
     }
 
     .pulse {
@@ -136,10 +134,6 @@
       position: absolute;
       left: 70px;
       bottom: 155px;
-      border: none;
-      padding: 0;
-      background: none;
-      cursor: pointer;
       transition: transform 0.5s ease-in-out;
     }
 
@@ -180,7 +174,7 @@
   <div class="container">
     <div class="main">
       <img class="inscription" src="img/inscription.gif" width="300">
-      <div class="wheel spin" id="rotate">
+      <div class="wheel spi" id="rotate">
         <img src="img/wheel.png" width="480">
       </div>
       <div class="center">
@@ -197,7 +191,59 @@
         <img class="splendida none" id="splendida" src="img/splendida!.png" width="150">
       </div>
     </div>
-    <script src="js/script.js"></script>
+    <script>
+      const button = document.getElementById('rotateButton');
+      const rotatingElement = document.getElementById('rotate');
+      const totalElement = document.getElementById('totalElement');
+      let total = parseInt(totalElement.textContent);
+      const repeat = document.getElementById('repeat');
+      const splendida = document.getElementById('splendida');
+      const bonus = document.getElementById('bonus');
+      const img = document.getElementById('img');
+      const static = document.getElementById('static');
+      let clickCount = 0;
+
+      button.addEventListener('click', () => {
+        button.classList.remove('pulse');
+        button.classList.add('not-allow');
+        
+        clickCount++;
+        let finalRotation;
+
+        if (clickCount % 2 !== 0) {
+          finalRotation = -120;
+        } else {
+          finalRotation = 30;
+        };
+
+        rotatingElement.style.transition = 'transform 3s ease-in-out';
+        rotatingElement.style.transform = `rotate(${finalRotation + (360 * Math.floor(clickCount / 2))}deg)`;
+
+        setTimeout(() => {
+          button.classList.add('pulse');
+          button.classList.remove('not-allow');
+          total -= 1;
+          totalElement.textContent = total;
+
+          if (total === 1) {
+            repeat.classList.add('block');
+          };
+          
+          if (total === 0) {
+            repeat.classList.remove('block');
+            splendida.classList.add('block');
+            button.classList.add('none');
+            bonus.classList.add('block');
+            setTimeout(() => {
+              splendida.classList.remove('block');
+            }, 1000);
+            bonus.classList.add('plus');
+            img.classList.add('pulse');
+            static.classList.add('block');
+          };
+        }, 3000);
+      });
+    </script>
   </div>
 </body>
 </html>
